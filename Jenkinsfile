@@ -5,14 +5,15 @@ node{
 git_url='https://github.com/AnushkaMathur/mynodeapp.git'
 env.tag=BUILD_NUMBER
 //docker
-env.docker_registry_url='https://360913885216.dkr.ecr.us-east-1.amazonaws.com/mynode'
-env.docker_repo='360913885216.dkr.ecr.us-east-1.amazonaws.com/mynode'
+docker_registry_url='https://360913885216.dkr.ecr.us-east-1.amazonaws.com/mynode'
+docker_repo='360913885216.dkr.ecr.us-east-1.amazonaws.com/mynode'
 //ecs
 env.region='us-east-1'
 env.family="jenkins-td"
 env.service_name="node-svc"
 env.cluster_name="mynode"
 env.ecs_server='360913885216.dkr.ecr.us-east-1.amazonaws.com'
+env.repo='360913885216.dkr.ecr.us-east-1.amazonaws.com/mynode'
 
 
 
@@ -54,6 +55,6 @@ env.ecs_server='360913885216.dkr.ecr.us-east-1.amazonaws.com'
     sh '''
   
 
-aws cloudformation create-stack --stack-name myteststack --template-body file://nodetest.yaml --parameters ParameterKey=Image,ParameterValue=$docker_repo":"$tag 
+aws cloudformation create-stack --stack-name myteststack --template-body file://nodetest.yaml --parameters ParameterKey=Image,ParameterValue=$repo":"$tag 
         ''' 
      }}
