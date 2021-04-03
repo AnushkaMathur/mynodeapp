@@ -9,14 +9,12 @@ docker_registry_url='https://360913885216.dkr.ecr.us-east-1.amazonaws.com/mynode
 docker_repo='360913885216.dkr.ecr.us-east-1.amazonaws.com/mynode'
 //ecs
 env.region='us-east-1'
-env.family="jenkins-td"
+env.family="nodeapp-td"
 env.service_name="node-svc"
-env.cluster_name="task1"
+env.cluster_name="craft"
 env.ecs_server='360913885216.dkr.ecr.us-east-1.amazonaws.com'
 env.repo='360913885216.dkr.ecr.us-east-1.amazonaws.com/mynode'
-
-
-
+env.stackname=nodedeploy
 
    stage('Clean WorkSpace'){
        sh 'rm -rf *'
@@ -53,8 +51,15 @@ env.repo='360913885216.dkr.ecr.us-east-1.amazonaws.com/mynode'
 
     env.new_docker_image=docker_repo+":"+env.tag
     sh '''
-  
-
-aws cloudformation create-stack --stack-name myteststack --template-body file://nodetest.yaml --parameters ParameterKey=Image,ParameterValue=$repo":"$tag 
-        ''' 
+  stackexists= $(aws cloudformation describe-stacks | jq '.Stacks[0].StackName')
+'''
+  if ( $stackexists == $stackname ) {
+      sh '''
+      aws cloudformation update-stack --stack-name $stackname --template-body file://nodetest.yaml --parameters ParameterKey=Family,ParameterValue=$family ParameterKey=ServiceName,ParameterValue=$service_name ParameterKey=ClusterName,ParameterValue=$cluster_name  ParameterKey=Image,ParameterValue=$repo":"$tag 
+      '''
+  }
+  else {
+      sh '''
+aws cloudformation create-stack --stack-name $stackname --template-body file://nodetest.yaml --parameters ParameterKey=Family,ParameterValue=$family ParameterKey=ServiceName,ParameterValue=$service_name ParameterKey=ClusterName,ParameterValue=$cluster_name  ParameterKey=Image,ParameterValue=$repo":"$tag 
+   '''   }    
      }}
