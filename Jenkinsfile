@@ -14,7 +14,7 @@ env.service_name="node-svc"
 env.cluster_name="craft"
 env.ecs_server='360913885216.dkr.ecr.us-east-1.amazonaws.com'
 env.repo='360913885216.dkr.ecr.us-east-1.amazonaws.com/mynode'
-env.stackname=nodedeploy
+env.stackname="nodedeploy"
 
    stage('Clean WorkSpace'){
        sh 'rm -rf *'
