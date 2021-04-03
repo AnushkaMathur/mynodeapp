@@ -1,0 +1,42 @@
+AWSTemplateFormatVersion: 2010-09-09
+Parameters:
+  Image:
+    Description: Name of ecr repo image
+    Type: String
+
+Resources:
+  taskdefinition: 
+    Type: AWS::ECS::TaskDefinition
+    Properties: 
+      RequiresCompatibilities:
+        - "EC2"
+    
+      ContainerDefinitions: 
+        - 
+          Name: "my-app"
+
+          Image: !Ref Image
+          Cpu: "256"
+          Memory: "512"
+          Essential: true
+          PortMappings:
+            -
+              ContainerPort: "9005"
+              Protocol: "tcp"
+
+  ECSService: 
+    Type: AWS::ECS::Service
+    Properties: 
+      Cluster: "task1"
+      LoadBalancers:
+         - TargetGroupArn: "arn:aws:elasticloadbalancing:us-east-1:360913885216:loadbalancer/app/node/03582638986b55a0" 
+           ContainerPort: "9005"
+           ContainerName: "my-app"
+      DesiredCount: "1"
+      TaskDefinition: 
+        Ref: "taskdefinition"
+ 
+
+          
+ 
+        
