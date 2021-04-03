@@ -9,7 +9,7 @@ Parameters:
   Family:
     Description: task definition family
     Type: String  
-   ServiceName:
+  ServiceName:
     Description: ECS service name
     Type: String  
 
