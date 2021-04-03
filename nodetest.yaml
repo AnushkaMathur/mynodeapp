@@ -3,6 +3,16 @@ Parameters:
   Image:
     Description: Name of ecr repo image
     Type: String
+  ClusterName:
+    Description: Name of ECS cluster
+    Type: String
+  Family:
+    Description: task definition family
+    Type: String  
+   ServiceName:
+    Description: ECS service name
+    Type: String  
+
 
 Resources:
   taskdefinition: 
@@ -10,6 +20,7 @@ Resources:
     Properties: 
       RequiresCompatibilities:
         - "EC2"
+      Family: !Ref Family
     
       ContainerDefinitions: 
         - 
@@ -27,7 +38,8 @@ Resources:
   ECSService: 
     Type: AWS::ECS::Service
     Properties: 
-      Cluster: "task1"
+      Cluster: !Ref ClusterName
+      ServiceName: !Ref  ServiceName
       LoadBalancers:
          - TargetGroupArn: "arn:aws:elasticloadbalancing:us-east-1:360913885216:targetgroup/node-test-tg/7442d014f726c1f9" 
            ContainerPort: "9005"
