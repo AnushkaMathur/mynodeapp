@@ -58,13 +58,14 @@ env.stackname="nodedeploy"
 '''
   if ( "$stackexists" == "$stackname" ) {
       sh '''
-      echo "hello"
+      echo "update"
       aws cloudformation update-stack --stack-name $stackname --template-body file://nodetest.yaml --parameters ParameterKey=Family,ParameterValue=$family ParameterKey=ServiceName,ParameterValue=$service_name ParameterKey=ClusterName,ParameterValue=$cluster_name  ParameterKey=Image,ParameterValue=$repo":"$tag 
       '''
   }
          }
- // catch (Exception e) {
-   //   sh '''
+ catch (Exception e) {
+    sh '''
+    echo "create"
 //aws cloudformation create-stack --stack-name $stackname --template-body file://nodetest.yaml --parameters ParameterKey=Family,ParameterValue=$family ParameterKey=ServiceName,ParameterValue=$service_name ParameterKey=ClusterName,ParameterValue=$cluster_name  ParameterKey=Image,ParameterValue=$repo":"$tag 
-  // '''   }    
+   '''   }    
      }}
