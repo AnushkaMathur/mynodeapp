@@ -15,6 +15,7 @@ env.cluster_name="craft"
 env.ecs_server='360913885216.dkr.ecr.us-east-1.amazonaws.com'
 env.repo='360913885216.dkr.ecr.us-east-1.amazonaws.com/mynode'
 env.stackname="nodedeploy"
+   
 
    stage('Clean WorkSpace'){
        sh 'rm -rf *'
@@ -50,7 +51,9 @@ env.stackname="nodedeploy"
      stage('ECS Deployment'){
 
     env.new_docker_image=docker_repo+":"+env.tag
+         try {
     sh '''
+  
   stackexists= $(aws cloudformation describe-stacks | jq '.Stacks[].StackName' | grep $stackname)
 '''
   if ( $stackexists == $stackname ) {
@@ -58,7 +61,8 @@ env.stackname="nodedeploy"
       aws cloudformation update-stack --stack-name $stackname --template-body file://nodetest.yaml --parameters ParameterKey=Family,ParameterValue=$family ParameterKey=ServiceName,ParameterValue=$service_name ParameterKey=ClusterName,ParameterValue=$cluster_name  ParameterKey=Image,ParameterValue=$repo":"$tag 
       '''
   }
-  else {
+         }
+  catch {
       sh '''
 aws cloudformation create-stack --stack-name $stackname --template-body file://nodetest.yaml --parameters ParameterKey=Family,ParameterValue=$family ParameterKey=ServiceName,ParameterValue=$service_name ParameterKey=ClusterName,ParameterValue=$cluster_name  ParameterKey=Image,ParameterValue=$repo":"$tag 
    '''   }    
