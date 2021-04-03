@@ -29,7 +29,7 @@ Resources:
     Properties: 
       Cluster: "task1"
       LoadBalancers:
-         - TargetGroupArn: "arn:aws:elasticloadbalancing:us-east-1:360913885216:loadbalancer/app/node/03582638986b55a0" 
+         - TargetGroupArn: "arn:aws:elasticloadbalancing:us-east-1:360913885216:targetgroup/node-test-tg/7442d014f726c1f9" 
            ContainerPort: "9005"
            ContainerName: "my-app"
       DesiredCount: "1"
