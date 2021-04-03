@@ -51,7 +51,7 @@ env.stackname="nodedeploy"
 
     env.new_docker_image=docker_repo+":"+env.tag
     sh '''
-  stackexists= $(aws cloudformation describe-stacks | jq '.Stacks[0].StackName')
+  stackexists= $(aws cloudformation describe-stacks | jq '.Stacks[].StackName' | grep $stackname)
 '''
   if ( $stackexists == $stackname ) {
       sh '''
