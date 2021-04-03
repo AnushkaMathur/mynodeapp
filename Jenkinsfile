@@ -57,7 +57,7 @@ env.stackname="nodedeploy"
   stackexists= $(aws cloudformation describe-stacks | jq '.Stacks[].StackName' | grep $stackname)
   echo $stackexists
 '''
-  if ( $stackexists" == "$stackname" ) {
+  if ( $stackexists == $stackname ) {
       sh '''
       echo "update"
       aws cloudformation update-stack --stack-name $stackname --template-body file://nodetest.yaml --parameters ParameterKey=Family,ParameterValue=$family ParameterKey=ServiceName,ParameterValue=$service_name ParameterKey=ClusterName,ParameterValue=$cluster_name  ParameterKey=Image,ParameterValue=$repo":"$tag 
