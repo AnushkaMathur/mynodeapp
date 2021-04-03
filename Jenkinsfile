@@ -11,7 +11,7 @@ docker_repo='360913885216.dkr.ecr.us-east-1.amazonaws.com/mynode'
 env.region='us-east-1'
 env.family="jenkins-td"
 env.service_name="node-svc"
-env.cluster_name="mynode"
+env.cluster_name="task1"
 env.ecs_server='360913885216.dkr.ecr.us-east-1.amazonaws.com'
 env.repo='360913885216.dkr.ecr.us-east-1.amazonaws.com/mynode'
 
