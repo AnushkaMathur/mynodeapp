@@ -41,7 +41,7 @@ Resources:
       Cluster: !Ref ClusterName
       ServiceName: !Ref  ServiceName
       LoadBalancers:
-         - TargetGroupArn: "arn:aws:elasticloadbalancing:us-east-1:360913885216:targetgroup/node-test-tg/7442d014f726c1f9" 
+         - TargetGroupArn: "arn:aws:elasticloadbalancing:us-east-1:360913885216:targetgroup/craft-tg/cb5e42a839258a17" 
            ContainerPort: "9005"
            ContainerName: "my-app"
       DesiredCount: "1"
