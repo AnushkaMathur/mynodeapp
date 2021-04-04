@@ -51,22 +51,23 @@ env.stackname="nodedeploy"
      stage('ECS Deployment'){
 
     env.new_docker_image=docker_repo+":"+env.tag
-         try {
-    sh '''
+    //     try {
+  //  sh '''
   
-  stackexists= $(aws cloudformation describe-stacks | jq '.Stacks[].StackName' | grep $stackname)
-  echo $stackexists
-'''
-  if ( $stackexists == $stackname ) {
-      sh '''
-      echo "update"
-      aws cloudformation update-stack --stack-name $stackname --template-body file://nodetest.yaml --parameters ParameterKey=Family,ParameterValue=$family ParameterKey=ServiceName,ParameterValue=$service_name ParameterKey=ClusterName,ParameterValue=$cluster_name  ParameterKey=Image,ParameterValue=$repo":"$tag 
-      '''
-  }
-         }
- catch (Exception e) {
+//  stackexists= $(aws cloudformation describe-stacks | jq '.Stacks[].StackName' | grep $stackname)
+  //echo $stackexists
+//'''
+  //if ( $stackexists == $stackname ) {
+    //  sh '''
+      //echo "update"
+      //aws cloudformation update-stack --stack-name $stackname --template-body file://nodetest.yaml --parameters ParameterKey=Family,ParameterValue=$family ParameterKey=ServiceName,ParameterValue=$service_name ParameterKey=ClusterName,ParameterValue=$cluster_name  ParameterKey=Image,ParameterValue=$repo":"$tag 
+      //'''
+  //}
+      //   }
+ //catch (Exception e) {
     sh '''
     echo "create"
-//aws cloudformation create-stack --stack-name $stackname --template-body file://nodetest.yaml --parameters ParameterKey=Family,ParameterValue=$family ParameterKey=ServiceName,ParameterValue=$service_name ParameterKey=ClusterName,ParameterValue=$cluster_name  ParameterKey=Image,ParameterValue=$repo":"$tag 
-   '''   }    
+aws cloudformation create-stack --stack-name $stackname --template-body file://nodetest.yaml --parameters ParameterKey=Family,ParameterValue=$family ParameterKey=ServiceName,ParameterValue=$service_name ParameterKey=ClusterName,ParameterValue=$cluster_name  ParameterKey=Image,ParameterValue=$repo":"$tag 
+   '''   
+         //}    
      }}
