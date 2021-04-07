@@ -60,7 +60,7 @@ aws cloudformation create-stack --stack-name $stackname --template-body file://n
         
  catch (Exception e) {
       sh '''
-   echo "update stack"
+   echo "Update stack"
 
       aws cloudformation update-stack --stack-name $stackname --template-body file://nodetest.yaml --parameters ParameterKey=Family,ParameterValue=$family ParameterKey=ServiceName,ParameterValue=$service_name ParameterKey=ClusterName,ParameterValue=$cluster_name  ParameterKey=Image,ParameterValue=$repo":"$tag 
     '''
