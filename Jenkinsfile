@@ -53,14 +53,14 @@ env.stackname="nodedeploy"
     env.new_docker_image=docker_repo+":"+env.tag
        try {
  sh '''
-    echo "create"
+    echo "create stack"
 aws cloudformation create-stack --stack-name $stackname --template-body file://nodetest.yaml --parameters ParameterKey=Family,ParameterValue=$family ParameterKey=ServiceName,ParameterValue=$service_name ParameterKey=ClusterName,ParameterValue=$cluster_name  ParameterKey=Image,ParameterValue=$repo":"$tag 
    '''   
          }    
         
  catch (Exception e) {
       sh '''
-   echo "update"
+   echo "update stack"
 
       aws cloudformation update-stack --stack-name $stackname --template-body file://nodetest.yaml --parameters ParameterKey=Family,ParameterValue=$family ParameterKey=ServiceName,ParameterValue=$service_name ParameterKey=ClusterName,ParameterValue=$cluster_name  ParameterKey=Image,ParameterValue=$repo":"$tag 
     '''
